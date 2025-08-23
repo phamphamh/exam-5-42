@@ -1,5 +1,3 @@
-#ifndef B9400B53_5CD9_4A1C_8559_45A77A434BE8
-#define B9400B53_5CD9_4A1C_8559_45A77A434BE8
 #ifndef TREE_BAG_HPP
 #define TREE_BAG_HPP
 
@@ -19,7 +17,7 @@ class TreeBag: virtual public Bag {
 		TreeBag(const TreeBag& other);
 		~TreeBag();
 		TreeBag& operator=(const TreeBag& other);
-		
+
 		Node* extractTree();
 		void setTree(Node*);
 		virtual void insert(int);
@@ -34,6 +32,3 @@ class TreeBag: virtual public Bag {
 };
 
 #endif
-
-
-#endif /* B9400B53_5CD9_4A1C_8559_45A77A434BE8 */

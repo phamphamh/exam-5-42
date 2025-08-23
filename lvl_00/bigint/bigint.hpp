@@ -1,5 +1,3 @@
-#ifndef BF57D649_F1FB_48E9_94EC_FCD6FBA66B09
-#define BF57D649_F1FB_48E9_94EC_FCD6FBA66B09
 #ifndef BIGINT_HPP
 #define BIGINT_HPP
 
@@ -50,6 +48,3 @@ class bigint {
 std::ostream& operator<<(std::ostream& os, const bigint& bi);
 
 #endif
-
-
-#endif /* BF57D649_F1FB_48E9_94EC_FCD6FBA66B09 */

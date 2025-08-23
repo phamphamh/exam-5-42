@@ -19,20 +19,20 @@ int vect2::operator[](int i) const{
     return  (i == 0) ? _x : _y;
 }
 
-vect2 vect2::operator+(int i){
+vect2 vect2::operator+(int i) const{
     vect2 vec(_x + i, _y + i);
     return vec;
 }
-vect2 vect2::operator*(int i){
+vect2 vect2::operator*(int i) const{
     vect2 vec(_x * i, _y * i);
     return vec;
 }
 
-vect2 vect2::operator+(const vect2& vec){
+vect2 vect2::operator+(const vect2& vec) const{
     vect2 vecr(_x + vec._x, _y + vec._y);
     return vecr;
 }
-vect2 vect2::operator*(const vect2& vec){
+vect2 vect2::operator*(const vect2& vec) const{
     vect2 vecr(_x * vec._x, _y * vec._y);
     return vecr;
 }
@@ -82,10 +82,10 @@ vect2& vect2::operator-=(const vect2& vec){
     return *this;
 }
 
-bool vect2::operator==(const vect2& vec){
+bool vect2::operator==(const vect2& vec) const{
     return (_x == vec._x && _y == vec._y);
 }
-bool vect2::operator!=(const vect2& vec){
+bool vect2::operator!=(const vect2& vec) const{
     return (_x != vec._x || _y != vec._y);
 }
 
@@ -99,7 +99,7 @@ vect2 operator*(int i, const vect2& vect){
 }
 
 void vect2::print(std::ostream& os) const{
-    os << "{" << _x << ", " << _y << "}" << std::endl;
+    os << "{" << _x << ", " << _y << "}" << '\n';
 }
 
 std::ostream& operator<<(std::ostream& os, const vect2& obj){

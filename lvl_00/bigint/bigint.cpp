@@ -1,4 +1,16 @@
 #include "bigint.hpp"
+#include <limits>
+
+static size_t parseShiftCount(const std::string& revDigits) {
+    size_t value = 0;
+    for (size_t i = revDigits.size(); i-- > 0; ) {
+        int d = revDigits[i] - '0';
+        if (value > std::numeric_limits<size_t>::max() / 10)
+            return std::numeric_limits<size_t>::max();
+        value = value * 10 + static_cast<size_t>(d);
+    }
+    return value;
+}
 
 bigint::bigint() : _val("0"){}
 
@@ -105,52 +117,31 @@ bool bigint::operator<=(const bigint& bi) const{
 }
 
 bigint bigint::operator<<(unsigned int y) const{
-    std::string res = _val;
-    std::reverse(res.begin(), res.end());
-    for (size_t i = 0 ; i < y; i++)
-        res.append("0");
-    bigint result(res);
-    return result;
+    bigint r(*this);
+    if (y > 0)
+        r._val.insert(r._val.begin(), y, '0');
+    return r;
 }
 
 bigint bigint::operator>>(unsigned int y) const{
-    std::string res = _val;
-    std::reverse(res.begin(), res.end());
-    for (size_t i = 0 ; i < y && !res.empty(); i++)
-        res.erase(res.size() - 1);
-    bigint result(res);
-    return result;
+    bigint r(*this);
+    if (y >= r._val.size()) {
+        r._val = "0";
+        return r;
+    }
+    if (y > 0)
+        r._val.erase(r._val.begin(), r._val.begin() + y);
+    return r;
 }
 
 bigint bigint::operator<<(const bigint& bi) const{
-    size_t dix = 1;
-    std::string res = _val;
-    std::reverse(res.begin(), res.end());
-    for (size_t i = 0 ; i < bi._val.size(); i++){
-        for (size_t y = 0; y < (size_t)((bi._val[i] - '0') * dix); y++)
-            res.append("0");
-        dix *= 10;
-    }
-    bigint result(res);
-    return result;
+    size_t count = parseShiftCount(bi._val);
+    return (*this) << static_cast<unsigned int>(count);
 }
 
 bigint bigint::operator>>(const bigint& bi) const{
-    size_t dix = 1;
-    std::string res = _val;
-    std::reverse(res.begin(), res.end());
-    for (size_t i = 0 ; i < bi._val.size(); i++){
-        if (res.empty())
-            break;
-        for (size_t y = 0; y < (size_t)((bi._val[i] - '0') * dix); y++){
-            res.erase(res.size() - 1);
-            if (res.empty())
-            break;
-        }
-        dix *= 10;
-    }
-    bigint result(res);
-    return result;
+    size_t count = parseShiftCount(bi._val);
+    return (*this) >> static_cast<unsigned int>(count);
 }
 
 bigint& bigint::operator<<=(unsigned int y){
@@ -173,9 +164,9 @@ bigint& bigint::operator>>=(const bigint& bi){
 
 
 void bigint::print(std::ostream& os) const{
-    std::string res = _val;
-    std::reverse(res.begin(), res.end());
-    os << res << std::endl;
+    for (size_t i = _val.size(); i-- > 0; )
+        os << _val[i];
+    os << '\n';
 }
 
 std::ostream& operator<<(std::ostream& os, const bigint& bi){
