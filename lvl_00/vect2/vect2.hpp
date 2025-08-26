@@ -2,32 +2,78 @@
 #include <iostream>
 
 struct vect2 {
-    int _x, _y;
+	int x, y;
 
-    vect2(int x = 0, int y = 0) : _x(x), _y(y) {}
-    vect2(const vect2& o) : _x(o._x), _y(o._y) {}
-    vect2& operator=(const vect2& o) { _x = o._x; _y = o._y; return *this; }
+	vect2(int a = 0, int b = 0) : x(a), y(b) {}
+	vect2(const vect2& c) : x(c.x), y(c.y) {}
+	vect2& operator=(const vect2& d) {x = d.x; y = d.y; return *this;}
 
-    int& operator[](int i) { return i ? _y : _x; }
-    int operator[](int i) const { return i ? _y : _x; }
+	int& operator[](int i) { return i ? y : x;}
+	int operator[](int i) const { return i ? y: x;}
 
-    vect2 operator+(int i) const { return vect2(_x + i, _y + i); }
-    vect2 operator*(int i) const { return vect2(_x * i, _y * i); }
-    vect2 operator+(const vect2& v) const { return vect2(_x + v._x, _y + v._y); }
-    vect2 operator*(const vect2& v) const { return vect2(_x * v._x, _y * v._y); }
+	vect2 operator+(int i) const { return vect2(x + i, y + i); }
+	vect2 operator*(int i) const { return vect2(x * i, y * i); }
+	vect2 operator-(int i) const { return vect2(x - i, y - i); }
 
-    vect2 operator++(int) { vect2 tmp(*this); _x++; _y++; return tmp; }
-    vect2& operator++() { _x++; _y++; return *this; }
-    vect2 operator--(int) { vect2 tmp(*this); _x--; _y--; return tmp; }
-    vect2& operator--() { _x--; _y--; return *this; }
 
-    bool operator==(const vect2& v) const { return _x == v._x && _y == v._y; }
-    bool operator!=(const vect2& v) const { return !(*this == v); }
+	vect2 operator+(const vect2& v) const { return vect2(x + v.x, y + v.y); }
+	vect2 operator*(const vect2& v) const { return vect2(x * v.x, y * v.y); }
+	vect2 operator-(const vect2& v) const { return vect2(x - v.x, y - v.y); }
 
-    vect2& operator+=(int i) { _x += i; _y += i; return *this; }
-    vect2& operator*=(int i) { _x *= i; _y *= i; return *this; }
-    vect2& operator+=(const vect2& v) { _x += v._x; _y += v._y; return *this; }
-    vect2& operator*=(const vect2& v) { _x *= v._x; _y *= v._y; return *this; }
+	vect2 operator++(int) { vect2 tmp(*this); x++; y++; return tmp; }
+	vect2 operator--(int) { vect2 tmp(*this); x--; y--; return tmp;}
 
-    void print() const { std::cout << "(" << _x << ", " << _y << ")" << std::endl; }
+	vect2& operator++() {x++; y++; return *this;}
+	vect2& operator--() {x--; y--; return *this; }
+
+	bool operator==(const vect2& v)const {return x == v.x && y == v.y; }
+	bool operator !=(const vect2& v)const {return !(*this == v); }
+
+	vect2& operator +=(int i) { x += i; y += i; return *this;}
+	vect2& operator *=(int i) { x *= i; y *= i; return *this;}
+	vect2& operator -=(int i) { x -= i; y -= i; return *this;}
+
+	vect2& operator +=(const vect2& v) {x += v.x; y += v.y; return *this; }
+	vect2& operator -=(const vect2& v) {x -= v.x; y -= v.y; return *this; }
+	vect2& operator *=(const vect2& v) {x *= v.x; y *= v.y; return *this; }
+
+	void print() const { std::cout << "(" << x << ", " << y << ")" << std::endl; }
 };
+
+inline vect2 operator+(int i, const vect2& v) {return v + i;}
+inline vect2 operator*(int i, const vect2& v) {return v * i;}
+
+inline std::ostream& operator<<(std::ostream& os, const vect2& v) {
+	os << "(" << v.x << ", " << v.y << ")";
+	return os;
+}
+
+/*
+pragma once
+include iostream
+
+struct vect2
+
+int x y
+
+constructeurs - abcd, par defaut, nom, operateur - vect2 + ()
+
+acces aux composants - [] ?
+
+operateurs scalaires -  +-* int
+
+operateurs avec d autres vecteurs - +-* const
+
+operateurs incrementation decrementation - int + vect && () + return *this
+
+operateurs comparaisons
+
+operateurs d assignation composee
+
+print - "(" + fermer struct
+
+affichage - inline
+
+met const si tu veux changer l etat de l objet directement - ==, + etc pas ++ +=
+
+*/

@@ -1,41 +1,63 @@
+#include <iostream>
 #include "bigint.hpp"
 
 int main() {
     // Création de bigints
-    bigint num1(242);
-    bigint num2(10);
-    bigint num3;
-    bigint num4("123");
-
-    std::cout << "Test des constructeurs:" << std::endl;
-    std::cout << "num1 = "; num1.print();
-    std::cout << "num2 = "; num2.print();
-    std::cout << "num3 = "; num3.print();
-    std::cout << "num4 = "; num4.print();
-    std::cout << std::endl;
+    bigint num1("000242"), num2("0010"), num3, num4(1042);
+    bigint num5 = num2;
+    const bigint numC(60);
 
     // Test des opérateurs arithmétiques
-    std::cout << "Tests arithmétiques:" << std::endl;
-    bigint result = num1 + num2;
-    std::cout << "num1 + num2 = "; result.print();
-
+    std::cout << num1 << num2 << num3 << num4 << num5 << numC << std::endl;
+    std::cout << "num1 + num2 = " << (num1 + num2) << std::endl;
     num3 = num1;
     num3 += num2;
-    std::cout << "num3 += num2: "; num3.print();
-    std::cout << std::endl;
+    std::cout << "num3 += num2: " << num3 << std::endl;
+
+    bigint num8("999"), num9("9990");
 
     // Test des comparaisons
-    std::cout << "Tests de comparaison:" << std::endl;
-    std::cout << "num1 < num2: " << (num1 < num2) << std::endl;
-    std::cout << "num2 < num1: " << (num2 < num1) << std::endl;
-    std::cout << std::endl;
+    std::cout << "num8 == num9: " << (num8 == num9) << std::endl;
+    std::cout << "num8 != num9: " << (num8 != num9) << std::endl;
+    std::cout << "num8 < num9: " << (num8 < num9) << std::endl;
+    std::cout << "num8 <= num9: " << (num8 <= num9) << std::endl;
+    std::cout << "num8 > num9: " << (num8 > num9) << std::endl;
+    std::cout << "num8 >= num9: " << (num8 >= num9) << std::endl;
 
-    // Test du décalage
-    std::cout << "Tests de décalage:" << std::endl;
-    bigint shifted = num2 << 1;
-    std::cout << "num2 << 1 = "; shifted.print();
-    shifted = num2 << 3;
-    std::cout << "num2 << 3 = "; shifted.print();
+    bigint num10("4254");
+    // Test des décalages avec entiers
+    std::cout << "num1 << 2 = " << (num10 << 2) << std::endl;
+    std::cout << "num1 >> 2 = " << (num10 >> 4) << std::endl;
+
+    bigint num11("2");
+    // // Test des décalages avec bigint
+    std::cout << "num1 << num5 = " << (num10 >> num11) << std::endl;
+    std::cout << "num1 >> num5 = " << (num10 << num11) << std::endl;
+
+    bigint num12("2");
+    // // Test des décalages avec bigint
+    std::cout << "num12++ = " << (num12++) << std::endl;
+    std::cout << "num12 = " << (num12) << std::endl;
+    std::cout << "++num12 = " << (++num12) << std::endl;
+    std::cout << "num12 = " << (num12) << std::endl;
+
+    // Test des décalages avec bigint constant
+    std::cout << "num1 << numC = " << (num10 << numC) << std::endl;
+    std::cout << "num1 >> numC = " << (num10 >> numC) << std::endl;
+
+    // Test des affectations combinées avec décalages
+    num3 = num1;
+    num3 <<= 2;
+    std::cout << "num3 <<= 2: " << num3 << std::endl;
+    num3 >>= 1;
+    std::cout << "num3 >>= 1: " << num3 << std::endl;
+
+    // Test des affectations combinées avec bigint
+    num3 = num1;
+    num3 <<= num5;
+    std::cout << "num3 <<= num5: " << num3 << std::endl;
+    num3 >>= num5;
+    std::cout << "num3 >>= num5: " << num3 << std::endl;
 
     return 0;
 }

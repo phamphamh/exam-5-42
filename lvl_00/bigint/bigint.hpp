@@ -25,10 +25,15 @@ struct bigint {
 
     bigint& operator+=(const bigint& o) { *this = *this + o; return *this; }
 
+    bool operator==(const bigint& o) const { return _val == o._val; }
+    bool operator!=(const bigint& o) const { return _val != o._val; }
     bool operator<(const bigint& o) const {
         if (_val.size() != o._val.size()) return _val.size() < o._val.size();
         return _val < o._val;
     }
+    bool operator<=(const bigint& o) const { return *this < o || *this == o; }
+    bool operator>(const bigint& o) const { return !(*this <= o); }
+    bool operator>=(const bigint& o) const { return !(*this < o); }
 
     bigint operator<<(unsigned int n) const {
         bigint res(*this);
@@ -43,5 +48,39 @@ struct bigint {
         return res;
     }
 
+    bigint operator>>(unsigned int n) const {
+        bigint res(*this);
+        for (unsigned int i = 0; i < n; i++) {
+            int carry = 0;
+            for (int j = 0; j < (int)res._val.size(); j++) {
+                int val = (res._val[j] - '0') + carry * 10;
+                res._val[j] = '0' + val / 2; carry = val % 2;
+            }
+            while (res._val.size() > 1 && res._val[0] == '0') res._val.erase(0, 1);
+        }
+        return res;
+    }
+
+    unsigned int toUInt() const {
+        unsigned int result = 0;
+        for (size_t i = 0; i < _val.size() && i < 10; i++) {
+            result = result * 10 + (_val[i] - '0');
+        }
+        return result;
+    }
+
+    bigint operator<<(const bigint& o) const { return *this << o.toUInt(); }
+    bigint operator>>(const bigint& o) const { return *this >> o.toUInt(); }
+
+    bigint& operator<<=(unsigned int n) { *this = *this << n; return *this; }
+    bigint& operator>>=(unsigned int n) { *this = *this >> n; return *this; }
+    bigint& operator<<=(const bigint& o) { *this = *this << o; return *this; }
+    bigint& operator>>=(const bigint& o) { *this = *this >> o; return *this; }
+
+    bigint operator++(int) { bigint tmp(*this); *this = *this + bigint(1); return tmp; }
+    bigint& operator++() { *this = *this + bigint(1); return *this; }
+
     void print() const { std::cout << _val << std::endl; }
 };
+
+inline std::ostream& operator<<(std::ostream& os, const bigint& b) { os << b._val; return os; }
