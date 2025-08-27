@@ -1,17 +1,19 @@
-#ifndef SEARCHABLE_ARRAY_BAG_HPP
-#define SEARCHABLE_ARRAY_BAG_HPP
-
+#pragma once
 #include "ArrayBag.hpp"
 #include "SearchableBag.hpp"
 
 class SearchableArrayBag : public ArrayBag, public SearchableBag {
 public:
-    SearchableArrayBag();
-    SearchableArrayBag(const SearchableArrayBag& other);
-    ~SearchableArrayBag();
-    SearchableArrayBag& operator=(const SearchableArrayBag& other);
-
-    virtual bool has(int value) const;
+    SearchableArrayBag() : ArrayBag() {}
+    SearchableArrayBag(const SearchableArrayBag& other) : ArrayBag(other) {}
+    ~SearchableArrayBag() {}
+    SearchableArrayBag& operator=(const SearchableArrayBag& other) {
+        if (this != &other) ArrayBag::operator=(other);
+        return *this;
+    }
+    virtual bool has(int value) const {
+        for (int i = 0; i < _size; ++i)
+            if (_data[i] == value) return true;
+        return false;
+    }
 };
-
-#endif
