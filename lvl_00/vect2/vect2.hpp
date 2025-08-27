@@ -23,7 +23,7 @@ struct vect2 {
 	vect2 operator++(int) { vect2 tmp(*this); x++; y++; return tmp; }
 	vect2 operator--(int) { vect2 tmp(*this); x--; y--; return tmp;}
 
-	vect2& operator++() {x++; y++; return *this;}
+	vect2& operator++() {x++; y++; return *this; }
 	vect2& operator--() {x--; y--; return *this; }
 
 	bool operator==(const vect2& v)const {return x == v.x && y == v.y; }
@@ -37,43 +37,13 @@ struct vect2 {
 	vect2& operator -=(const vect2& v) {x -= v.x; y -= v.y; return *this; }
 	vect2& operator *=(const vect2& v) {x *= v.x; y *= v.y; return *this; }
 
-	void print() const { std::cout << "(" << x << ", " << y << ")" << std::endl; }
+	void print() const { std::cout << "{" << x << ", " << y << "}" << std::endl; }
 };
 
 inline vect2 operator+(int i, const vect2& v) {return v + i;}
 inline vect2 operator*(int i, const vect2& v) {return v * i;}
 
 inline std::ostream& operator<<(std::ostream& os, const vect2& v) {
-	os << "(" << v.x << ", " << v.y << ")";
+	os << "{" << v.x << ", " << v.y << "}";
 	return os;
 }
-
-/*
-pragma once
-include iostream
-
-struct vect2
-
-int x y
-
-constructeurs - abcd, par defaut, nom, operateur - vect2 + ()
-
-acces aux composants - [] ?
-
-operateurs scalaires -  +-* int
-
-operateurs avec d autres vecteurs - +-* const
-
-operateurs incrementation decrementation - int + vect && () + return *this
-
-operateurs comparaisons
-
-operateurs d assignation composee
-
-print - "(" + fermer struct
-
-affichage - inline
-
-met const si tu veux changer l etat de l objet directement - ==, + etc pas ++ +=
-
-*/
